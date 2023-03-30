@@ -6,7 +6,7 @@
 
     <fragment
         android:id="@+id/patientsFragment"
-        android:name="come.basim.patient_android_project.features.patients.PatientsFragment"
+        android:name="come.basim.patient_android_project.presentation.features.patients.PatientsFragment"
         android:label="PatientsFragment"
         />
 </navigation>

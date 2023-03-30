@@ -1,10 +1,10 @@
-package come.basim.patient_android_project.features.patients
+package come.basim.patient_android_project.presentation.features.patients
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import come.basim.patient_android_project.databinding.RowPatientsBinding
-import come.basim.patient_android_project.domin.model.PatientsRemoteModel
+import come.basim.patient_android_project.domin.model.patients.PatientsRemoteModel
+import come.basim.patient_android_project.presentation.databinding.RowPatientsBinding
 
 class PatientsAdapter(private val patients: List<PatientsRemoteModel>) :
     RecyclerView.Adapter<PatientsAdapter.patientsViewHolder>() {
@@ -33,18 +33,17 @@ class PatientsAdapter(private val patients: List<PatientsRemoteModel>) :
 
 
             binding.cardView.setOnClickListener {
-                if (position != lastSelected){
+                if (position != lastSelected) {
 
-
-                    if (lastSelected != -1){
-                        patients[lastSelected].selected=false
+                    if (lastSelected != -1) {
+                        patients[lastSelected].selected = false
                         notifyItemChanged(lastSelected)
-
-
-                        lastSelected =position
-                        patients[position].selected=true
-                        notifyItemChanged(position)
                     }
+
+                        lastSelected = position
+                        patients[position].selected = true
+                        notifyItemChanged(position)
+
                 }
             }
 

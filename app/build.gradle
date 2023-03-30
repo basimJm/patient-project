@@ -1,20 +1,23 @@
 plugins {
-    id 'com.android.library'
+    id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
     id 'kotlin-kapt'
     id 'com.google.dagger.hilt.android'
+
 }
 
 android {
-    namespace 'come.basim.patient_android_project.domin'
+    namespace 'come.basim.patient_android_project'
     compileSdk 33
 
     defaultConfig {
+        applicationId "come.basim.patient_android_project"
         minSdk 21
         targetSdk 33
+        versionCode 1
+        versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-        consumerProguardFiles "consumer-rules.pro"
     }
 
     buildTypes {
@@ -30,14 +33,31 @@ android {
     kotlinOptions {
         jvmTarget = '1.8'
     }
+    buildFeatures {
+        dataBinding true
+
+    }
+
 }
 
 dependencies {
+    implementation project(":presentation")
+    implementation project(":domin")
+    implementation project(":core")
+
+
+
 
     //DaggerHilt
     implementation "com.google.dagger:hilt-android:2.44"
+    implementation project(path: ':data')
+    implementation project(path: ':data')
     kapt "com.google.dagger:hilt-compiler:2.44"
 
-    //gson
-    implementation 'com.google.code.gson:gson:2.8.7'
+
+    //Navigation
+    implementation "androidx.navigation:navigation-fragment-ktx:2.5.3"
+
+
+
 }

@@ -7,7 +7,7 @@
 
         <variable
             name="model"
-            type="come.basim.patient_android_project.model.PatientsRemoteModel" />
+            type="come.basim.patient_android_project.domin.model.patients.PatientsRemoteModel" />
     </data>
 
     <androidx.cardview.widget.CardView
@@ -21,9 +21,10 @@
         app:strokeWidth="2dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constraint"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@{model.selected ? @color/color_primary : @color/design_default_color_primary_variant}">
+            android:background="@{model.selected ? @color/color_primary : @color/color_primary_variant}">
 
             <com.google.android.material.imageview.ShapeableImageView
                 android:id="@+id/image_view_patients"
@@ -40,6 +41,7 @@
                 app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.MyApp.MaterialCardView"
 
                 />
+
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/text_view_name"
                 style="@style/TextAppearance.Material3.BodyLarge"
@@ -51,7 +53,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/image_view_patients"
-                tools:text="@tools:sample/full_names"/>
+                tools:text="@tools:sample/full_names" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/text_view_Birthdate"
@@ -64,7 +66,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/text_view_name"
-                tools:text="@tools:sample/full_names"/>
+                tools:text="@tools:sample/full_names" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/text_view_condition"
@@ -77,8 +79,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/text_view_Birthdate"
-                tools:text="@tools:sample/full_names"/>
-
+                tools:text="@tools:sample/full_names" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
