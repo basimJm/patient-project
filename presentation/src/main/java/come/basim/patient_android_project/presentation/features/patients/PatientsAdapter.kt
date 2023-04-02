@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import come.basim.patient_android_project.domin.model.patients.PatientsRemoteModel
 import come.basim.patient_android_project.presentation.databinding.RowPatientsBinding
 
-class PatientsAdapter() :
+class PatientsAdapter(private val onDeletePatient : (id:String)->Unit) :
     ListAdapter<PatientsRemoteModel,PatientsAdapter.patientsViewHolder>(DiffCallBack) {
 
     var lastSelected = -1
@@ -46,8 +46,13 @@ class PatientsAdapter() :
 
                 }
             }
+            binding.imageDelete.setOnClickListener {
+                onDeletePatient(model.id)
+            }
 
         }
+
+
     }
     private  object DiffCallBack :DiffUtil.ItemCallback<PatientsRemoteModel>(){
 
@@ -65,4 +70,5 @@ class PatientsAdapter() :
             return oldItem== newItem
         }
     }
+
 }
