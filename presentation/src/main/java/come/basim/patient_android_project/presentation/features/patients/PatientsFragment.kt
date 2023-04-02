@@ -5,13 +5,12 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.view.isInvisible
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import come.basim.patient_android_project.presentation.R
 import come.basim.patient_android_project.presentation.databinding.FragmentPatientsBinding
 import dagger.hilt.android.AndroidEntryPoint
@@ -41,11 +40,12 @@ class PatientsFragment : Fragment() {
         initAdapter()
         initeObserver()
         initLesitener()
+
     }
 
     private fun initAdapter() {
-        adapter=PatientsAdapter()
-        binding.recycleView.adapter=adapter
+        adapter = PatientsAdapter(::deletePatient)
+        binding.recycleView.adapter = adapter
     }
 
     private fun initLesitener() {
@@ -57,7 +57,7 @@ class PatientsFragment : Fragment() {
             viewModel.getPatients()
             lifecycleScope.launch {
                 delay(3000)
-                binding.swipRefresh.isRefreshing=false
+                binding.swipRefresh.isRefreshing = false
             }
         }
     }
@@ -67,7 +67,7 @@ class PatientsFragment : Fragment() {
 
             viewModel.patientsSatteFlow.collect { response ->
                 if (response.isNotEmpty()) {
-                  adapter.submitList(response)
+                    adapter.submitList(response)
 
                 }
             }
@@ -88,5 +88,16 @@ class PatientsFragment : Fragment() {
                     Log.d("TAGOO", response.toString())
             }
         }
+    }
+
+    private fun deletePatient(id: String) {
+        MaterialAlertDialogBuilder(requireContext()).setMessage("Are you sure delte this patient")
+            .setNegativeButton("no") { dialog, _ ->
+                dialog.dismiss()
+
+            }.setPositiveButton("yes") { dialog, _ ->
+                viewModel.deletePatients(id)
+            }
+
     }
 }
