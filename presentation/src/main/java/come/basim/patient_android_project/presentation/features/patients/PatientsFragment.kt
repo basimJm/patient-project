@@ -8,8 +8,11 @@ import android.view.ViewGroup
 import androidx.core.view.isInvisible
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
+import come.basim.patient_android_project.presentation.R
 import come.basim.patient_android_project.presentation.databinding.FragmentPatientsBinding
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -32,9 +35,21 @@ class PatientsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        initeObserver()
+        initLesitener()
+    }
+
+    private fun initLesitener() {
+
+        binding.fabAdd.setOnClickListener {
+            findNavController().navigate(R.id.addPatientsFragment)
+        }
+    }
+
+    private fun initeObserver() {
         lifecycleScope.launch {
 
-            viewModel.patientsSatteFlow.collect{ response ->
+            viewModel.patientsSatteFlow.collect { response ->
                 if (response.isNotEmpty()) {
                     binding.recycleView.adapter = PatientsAdapter(response)
 
