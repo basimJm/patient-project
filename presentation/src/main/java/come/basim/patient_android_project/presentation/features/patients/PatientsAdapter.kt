@@ -2,12 +2,14 @@ package come.basim.patient_android_project.presentation.features.patients
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import come.basim.patient_android_project.domin.model.patients.PatientsRemoteModel
 import come.basim.patient_android_project.presentation.databinding.RowPatientsBinding
 
-class PatientsAdapter(private val patients: List<PatientsRemoteModel>) :
-    RecyclerView.Adapter<PatientsAdapter.patientsViewHolder>() {
+class PatientsAdapter() :
+    ListAdapter<PatientsRemoteModel,PatientsAdapter.patientsViewHolder>(DiffCallBack) {
 
     var lastSelected = -1
 
@@ -17,13 +19,11 @@ class PatientsAdapter(private val patients: List<PatientsRemoteModel>) :
     }
 
     override fun onBindViewHolder(holder: patientsViewHolder, position: Int) {
-        val model = patients[position]
+        val model = getItem(position)
         holder.bind(model, position)
     }
 
-    override fun getItemCount(): Int {
-        return patients.size
-    }
+
 
     inner class patientsViewHolder(private val binding: RowPatientsBinding) :
         RecyclerView.ViewHolder(binding.root) {
@@ -36,17 +36,33 @@ class PatientsAdapter(private val patients: List<PatientsRemoteModel>) :
                 if (position != lastSelected) {
 
                     if (lastSelected != -1) {
-                        patients[lastSelected].selected = false
+                        getItem(lastSelected).selected = false
                         notifyItemChanged(lastSelected)
                     }
 
                         lastSelected = position
-                        patients[position].selected = true
+                        getItem(position).selected = true
                         notifyItemChanged(position)
 
                 }
             }
 
+        }
+    }
+    private  object DiffCallBack :DiffUtil.ItemCallback<PatientsRemoteModel>(){
+
+        override fun areItemsTheSame(
+            oldItem: PatientsRemoteModel,
+            newItem: PatientsRemoteModel
+        ): Boolean {
+            return oldItem.id==newItem.id
+        }
+
+        override fun areContentsTheSame(
+            oldItem: PatientsRemoteModel,
+            newItem: PatientsRemoteModel
+        ): Boolean {
+            return oldItem== newItem
         }
     }
 }

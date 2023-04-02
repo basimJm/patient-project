@@ -15,6 +15,7 @@ import androidx.navigation.fragment.findNavController
 import come.basim.patient_android_project.presentation.R
 import come.basim.patient_android_project.presentation.databinding.FragmentPatientsBinding
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 
@@ -23,6 +24,8 @@ class PatientsFragment : Fragment() {
 
     private lateinit var binding: FragmentPatientsBinding
     private val viewModel: PatientsViewModel by viewModels()
+
+    private lateinit var adapter: PatientsAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -35,14 +38,27 @@ class PatientsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        initAdapter()
         initeObserver()
         initLesitener()
+    }
+
+    private fun initAdapter() {
+        adapter=PatientsAdapter()
+        binding.recycleView.adapter=adapter
     }
 
     private fun initLesitener() {
 
         binding.fabAdd.setOnClickListener {
             findNavController().navigate(R.id.addPatientsFragment)
+        }
+        binding.swipRefresh.setOnRefreshListener {
+            viewModel.getPatients()
+            lifecycleScope.launch {
+                delay(3000)
+                binding.swipRefresh.isRefreshing=false
+            }
         }
     }
 
@@ -51,7 +67,7 @@ class PatientsFragment : Fragment() {
 
             viewModel.patientsSatteFlow.collect { response ->
                 if (response.isNotEmpty()) {
-                    binding.recycleView.adapter = PatientsAdapter(response)
+                  adapter.submitList(response)
 
                 }
             }

@@ -74,11 +74,18 @@ class AddPatientsFragment:Fragment() {
         if (binding.editTextFullName.text?.isEmpty() == true) {
             isValid = false
             binding.textFullName.error = "Name is Empty"
+        }else {
+            binding.textFullName.error = ""
+
         }
 
         if (binding.editTextFullEmail.text?.isEmpty() == true) {
             isValid = false
             binding.textFullEmail.error = "Email is Empty"
+
+        }
+        else {
+            binding.textFullEmail.error = ""
 
         }
 
@@ -87,15 +94,28 @@ class AddPatientsFragment:Fragment() {
             binding.textFullAddress.error = "Address is Empty"
 
         }
+        else {
+            binding.textFullAddress.error = ""
+
+        }
+
         if (binding.editTextFullGender.text?.isEmpty() == true) {
             isValid = false
             binding.textFullGender.error = "Gender is Empty"
+
+        }
+        else {
+            binding.textFullGender.error = ""
 
         }
 
         if (binding.editTextFullMobile.text?.isEmpty() == true) {
             isValid = false
             binding.textFullMobile.error = "Mobile is Empty"
+
+        }
+        else {
+            binding.textFullMobile.error = ""
 
         }
         return isValid
