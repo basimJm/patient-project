@@ -2,7 +2,7 @@ package come.basim.patient_android_project.domin.model.patients
 
 import com.google.gson.annotations.SerializedName
 
-data class PatientsRemoteModel(
+data class PatientsResponseModel(
     val condition: String,
 
     @SerializedName("_id")
@@ -23,7 +23,7 @@ data class PatientsRemoteModel(
 
     val photo: String,
 
-    val tests :List<Testsdata>,
+
 
     //loacalVar
     var selected :Boolean= false
@@ -32,5 +32,11 @@ data class PatientsRemoteModel(
 
 
 )
+{
+
+    fun getPatientInfo():String{
+        return "Lives on $address , Email $email ,  Born on $birthdate"
+    }
+}
 
 

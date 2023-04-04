@@ -5,12 +5,16 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import come.basim.patient_android_project.core.BaseFragment
+import come.basim.patient_android_project.domin.model.delete.PatientDeleteResponse
+import come.basim.patient_android_project.domin.model.patients.PatientsResponseModel
 import come.basim.patient_android_project.presentation.R
 import come.basim.patient_android_project.presentation.databinding.FragmentPatientsBinding
 import dagger.hilt.android.AndroidEntryPoint
@@ -19,9 +23,9 @@ import kotlinx.coroutines.launch
 
 
 @AndroidEntryPoint
-class PatientsFragment : Fragment() {
+class PatientsFragment : BaseFragment<FragmentPatientsBinding>(R.layout.fragment_patients) {
 
-    private lateinit var binding: FragmentPatientsBinding
+
     private val viewModel: PatientsViewModel by viewModels()
 
     private lateinit var adapter: PatientsAdapter
@@ -44,7 +48,7 @@ class PatientsFragment : Fragment() {
     }
 
     private fun initAdapter() {
-        adapter = PatientsAdapter(::deletePatient)
+        adapter = PatientsAdapter(::deletePatient, ::onClickItem)
         binding.recycleView.adapter = adapter
     }
 
@@ -65,13 +69,9 @@ class PatientsFragment : Fragment() {
     private fun initeObserver() {
         lifecycleScope.launch {
 
-            viewModel.patientsSatteFlow.collect { response ->
-                if (response.isNotEmpty()) {
-                    adapter.submitList(response)
-
-                }
+            viewModel.patientsSatteFlow.collect(::onSuccessPatient)
             }
-        }
+
 
         lifecycleScope.launch {
 
@@ -84,11 +84,36 @@ class PatientsFragment : Fragment() {
         lifecycleScope.launch {
 
             viewModel.patientsErorrSatteFlow.collect() { response ->
-                if (response != null)
+                if (response != null) {
                     Log.d("TAGOO", response.toString())
+                }
             }
         }
+        lifecycleScope.launch {
+            viewModel.deletePatientsSatteFlow.observe(viewLifecycleOwner,::onPatientDeletedSuccess)
+        }
+
+
     }
+    private fun onPatientDeletedSuccess(response: PatientDeleteResponse?){
+        if (response != null){
+            Toast.makeText(requireContext(),response.message,Toast.LENGTH_LONG).show()
+            viewModel.getPatients()
+        }
+
+    }
+
+    private fun onSuccessPatient(response:List<PatientsResponseModel>?){
+
+
+            if (response?.isNotEmpty() == true) {
+                adapter.submitList(response)
+
+            }
+
+    }
+
+
 
     private fun deletePatient(id: String) {
         MaterialAlertDialogBuilder(requireContext()).setMessage("Are you sure delte this patient")
@@ -97,7 +122,12 @@ class PatientsFragment : Fragment() {
 
             }.setPositiveButton("yes") { dialog, _ ->
                 viewModel.deletePatients(id)
-            }
+                dialog.dismiss()
+            }.show()
 
     }
+    private fun onClickItem(id:String){
+        findNavController().navigate(R.id.detailsPatientFragment, bundleOf("id" to id))
+    }
+
 }

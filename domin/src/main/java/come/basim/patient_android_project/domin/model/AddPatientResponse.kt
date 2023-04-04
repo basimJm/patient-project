@@ -1,9 +1,12 @@
 package come.basim.patient_android_project.domin.model
 
-data class addPatientsRemoteModel(
+import com.google.gson.annotations.SerializedName
+
+data class AddPatientResponse(
     val condition: String,
 
-    val _id: String,
+    @SerializedName("_id")
+    val id: String,
 
     val name: String,
 
@@ -23,7 +26,8 @@ data class addPatientsRemoteModel(
 
     val updatedAt: String,
 
-    val __v: Int
+    @SerializedName("__v")
+    val v: Int
 
 )
 

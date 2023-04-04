@@ -7,7 +7,7 @@
 
         <variable
             name="model"
-            type="come.basim.patient_android_project.domin.model.patients.PatientsRemoteModel" />
+            type="come.basim.patient_android_project.domin.model.patients.PatientsResponseModel" />
     </data>
 
     <androidx.cardview.widget.CardView

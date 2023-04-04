@@ -1,10 +1,11 @@
 package come.basim.patient_android_project.presentation.features.patients
 
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import come.basim.patient_android_project.domin.model.delete.PatientDeleteResponseModel
-import come.basim.patient_android_project.domin.model.patients.PatientsRemoteModel
-import come.basim.patient_android_project.domin.repo.PatientsReporsitory
+import come.basim.patient_android_project.domin.model.delete.PatientDeleteResponse
+import come.basim.patient_android_project.domin.model.patients.PatientsResponseModel
 import come.basim.patient_android_project.domin.usecase.delete.PatientDeleteUseCase
 import come.basim.patient_android_project.domin.usecase.patients.GetPatientsYseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -22,15 +23,15 @@ class PatientsViewModel @Inject constructor(
 ) :
     ViewModel() {
 
-    val _patientsSatteFlow: MutableStateFlow<List<PatientsRemoteModel>> =
+    val _patientsSatteFlow: MutableStateFlow<List<PatientsResponseModel>> =
         MutableStateFlow(emptyList())
-    val patientsSatteFlow: StateFlow<List<PatientsRemoteModel>> = _patientsSatteFlow
+    val patientsSatteFlow: StateFlow<List<PatientsResponseModel>> = _patientsSatteFlow
 
 
     //delete
-    val _deletePatientsSatteFlow: MutableStateFlow<PatientDeleteResponseModel?> =
-        MutableStateFlow(null)
-    val deletePatientsSatteFlow = _deletePatientsSatteFlow.asStateFlow()
+    val _deletePatientsSatteFlow: MutableLiveData<PatientDeleteResponse> = MutableLiveData()
+
+    val deletePatientsSatteFlow : LiveData<PatientDeleteResponse> = _deletePatientsSatteFlow
 
 
     //Loading
@@ -67,7 +68,7 @@ class PatientsViewModel @Inject constructor(
         viewModelScope.launch {
             _patientsLoadingSatteFlow.emit(true)
             try {
-                _deletePatientsSatteFlow.emit(deleteUseCase(id))
+                _deletePatientsSatteFlow.postValue(deleteUseCase(id)!!)
             } catch (e: Exception) {
 
                 _patientsErorrSatteFlow.emit(e)
