@@ -43,5 +43,6 @@ fun addPatient(bodyAddingPatientsModel: BodyAddingPatientsModel){
         }
         _addPatientsLoadingSatteFlow.emit(false)
 }
+
 }
 }

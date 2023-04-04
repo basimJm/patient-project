@@ -1,5 +1,7 @@
 package come.basim.patient_android_project.presentation.features.patients
 
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import come.basim.patient_android_project.domin.model.delete.PatientDeleteResponseModel
@@ -28,9 +30,9 @@ class PatientsViewModel @Inject constructor(
 
 
     //delete
-    val _deletePatientsSatteFlow: MutableStateFlow<PatientDeleteResponseModel?> =
-        MutableStateFlow(null)
-    val deletePatientsSatteFlow = _deletePatientsSatteFlow.asStateFlow()
+    val _deletePatientsSatteFlow: MutableLiveData<PatientDeleteResponseModel> = MutableLiveData()
+
+    val deletePatientsSatteFlow : LiveData<PatientDeleteResponseModel> = _deletePatientsSatteFlow
 
 
     //Loading
@@ -67,7 +69,7 @@ class PatientsViewModel @Inject constructor(
         viewModelScope.launch {
             _patientsLoadingSatteFlow.emit(true)
             try {
-                _deletePatientsSatteFlow.emit(deleteUseCase(id))
+                _deletePatientsSatteFlow.postValue(deleteUseCase(id)!!)
             } catch (e: Exception) {
 
                 _patientsErorrSatteFlow.emit(e)

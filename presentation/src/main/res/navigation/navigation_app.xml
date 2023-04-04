@@ -7,14 +7,17 @@
     <fragment
         android:id="@+id/patientsFragment"
         android:name="come.basim.patient_android_project.presentation.features.patients.PatientsFragment"
-        android:label="PatientsFragment">
+        android:label="PatientsFragment" />
 
-    </fragment>
 
     <fragment
         android:id="@+id/addPatientsFragment"
         android:name="come.basim.patient_android_project.presentation.features.add.AddPatientsFragment"
         android:label="AddPatientsFragment" />
+    <fragment
+        android:id="@+id/detailsPatientFragment"
+        android:name="come.basim.patient_android_project.presentation.features.details.DetailsPatientFragment"
+        android:label="DetailsPatientFragment" />
 
 
 </navigation>

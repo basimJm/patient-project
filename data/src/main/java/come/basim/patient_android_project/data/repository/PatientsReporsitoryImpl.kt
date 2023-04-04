@@ -25,4 +25,8 @@ class PatientsReporsitoryImpl @Inject constructor(private val patientsDataSource
         return patientsDataSource.deletePatients(id)
     }
 
+    override suspend fun getPatientById(id: String): PatientsRemoteModel {
+        return patientsDataSource.getPatientById(id).data
+    }
+
 }
