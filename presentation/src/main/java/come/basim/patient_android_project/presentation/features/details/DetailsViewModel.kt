@@ -3,7 +3,7 @@ package come.basim.patient_android_project.presentation.features.details
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import come.basim.patient_android_project.domin.model.patients.PatientsRemoteModel
+import come.basim.patient_android_project.domin.model.patients.PatientsResponseModel
 import come.basim.patient_android_project.domin.usecase.details.GetPatientByIdUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -17,7 +17,7 @@ class DetailsViewModel @Inject constructor(
     state: SavedStateHandle
 ) : ViewModel() {
 
-    private val _detailsPatientsSatteFlow: MutableStateFlow<PatientsRemoteModel?> =
+    private val _detailsPatientsSatteFlow: MutableStateFlow<PatientsResponseModel?> =
         MutableStateFlow(null)
     val detailsPatientsSatteFlow = _detailsPatientsSatteFlow.asStateFlow()
 

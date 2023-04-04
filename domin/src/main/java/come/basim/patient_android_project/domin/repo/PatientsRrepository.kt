@@ -1,18 +1,17 @@
 package come.basim.patient_android_project.domin.repo
 
-import come.basim.patient_android_project.domin.model.add.BodyAddingPatientsModel
-import come.basim.patient_android_project.domin.model.addPatientsRemoteModel
-import come.basim.patient_android_project.domin.model.delete.PatientDeleteResponseModel
-import come.basim.patient_android_project.domin.model.details.DetailsPatientsWrapperRemoteModel
-import come.basim.patient_android_project.domin.model.patients.PatientsRemoteModel
+import come.basim.patient_android_project.domin.model.add.AddPatientRequest
+import come.basim.patient_android_project.domin.model.AddPatientResponse
+import come.basim.patient_android_project.domin.model.delete.PatientDeleteResponse
+import come.basim.patient_android_project.domin.model.patients.PatientsResponseModel
 
 interface PatientsReporsitory {
 
-    suspend fun getPatients(): List<PatientsRemoteModel>
+    suspend fun getPatients(): List<PatientsResponseModel>
 
-    suspend fun addPatients(bodyAddingPatientsModel: BodyAddingPatientsModel): addPatientsRemoteModel
+    suspend fun addPatients(bodyAddingPatientsModel: AddPatientRequest): AddPatientResponse
 
-    suspend fun deletePatient(id: String): PatientDeleteResponseModel
+    suspend fun deletePatient(id: String): PatientDeleteResponse
 
-    suspend fun getPatientById(id: String): PatientsRemoteModel
+    suspend fun getPatientById(id: String): PatientsResponseModel
 }

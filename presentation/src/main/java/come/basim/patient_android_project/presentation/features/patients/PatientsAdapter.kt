@@ -5,14 +5,14 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import come.basim.patient_android_project.domin.model.patients.PatientsRemoteModel
+import come.basim.patient_android_project.domin.model.patients.PatientsResponseModel
 import come.basim.patient_android_project.presentation.databinding.RowPatientsBinding
 
 class PatientsAdapter(
     private val onDeletePatient: (id: String) -> Unit,
     private val onClickItem: (id: String) -> Unit,
 ) :
-    ListAdapter<PatientsRemoteModel, PatientsAdapter.patientsViewHolder>(DiffCallBack) {
+    ListAdapter<PatientsResponseModel, PatientsAdapter.patientsViewHolder>(DiffCallBack) {
 
     var lastSelected = -1
 
@@ -29,7 +29,7 @@ class PatientsAdapter(
 
     inner class patientsViewHolder(private val binding: RowPatientsBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(model: PatientsRemoteModel, position: Int) {
+        fun bind(model: PatientsResponseModel, position: Int) {
             binding.model = model
 
 
@@ -58,18 +58,18 @@ class PatientsAdapter(
 
     }
 
-    private object DiffCallBack : DiffUtil.ItemCallback<PatientsRemoteModel>() {
+    private object DiffCallBack : DiffUtil.ItemCallback<PatientsResponseModel>() {
 
         override fun areItemsTheSame(
-            oldItem: PatientsRemoteModel,
-            newItem: PatientsRemoteModel
+            oldItem: PatientsResponseModel,
+            newItem: PatientsResponseModel
         ): Boolean {
             return oldItem.id == newItem.id
         }
 
         override fun areContentsTheSame(
-            oldItem: PatientsRemoteModel,
-            newItem: PatientsRemoteModel
+            oldItem: PatientsResponseModel,
+            newItem: PatientsResponseModel
         ): Boolean {
             return oldItem == newItem
         }

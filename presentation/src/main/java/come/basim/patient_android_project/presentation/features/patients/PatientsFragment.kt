@@ -8,13 +8,13 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import come.basim.patient_android_project.domin.model.delete.PatientDeleteResponseModel
-import come.basim.patient_android_project.domin.model.patients.PatientsRemoteModel
+import come.basim.patient_android_project.core.BaseFragment
+import come.basim.patient_android_project.domin.model.delete.PatientDeleteResponse
+import come.basim.patient_android_project.domin.model.patients.PatientsResponseModel
 import come.basim.patient_android_project.presentation.R
 import come.basim.patient_android_project.presentation.databinding.FragmentPatientsBinding
 import dagger.hilt.android.AndroidEntryPoint
@@ -23,9 +23,9 @@ import kotlinx.coroutines.launch
 
 
 @AndroidEntryPoint
-class PatientsFragment : Fragment() {
+class PatientsFragment : BaseFragment<FragmentPatientsBinding>(R.layout.fragment_patients) {
 
-    private lateinit var binding: FragmentPatientsBinding
+
     private val viewModel: PatientsViewModel by viewModels()
 
     private lateinit var adapter: PatientsAdapter
@@ -95,7 +95,7 @@ class PatientsFragment : Fragment() {
 
 
     }
-    private fun onPatientDeletedSuccess(response: PatientDeleteResponseModel?){
+    private fun onPatientDeletedSuccess(response: PatientDeleteResponse?){
         if (response != null){
             Toast.makeText(requireContext(),response.message,Toast.LENGTH_LONG).show()
             viewModel.getPatients()
@@ -103,7 +103,7 @@ class PatientsFragment : Fragment() {
 
     }
 
-    private fun onSuccessPatient(response:List<PatientsRemoteModel>?){
+    private fun onSuccessPatient(response:List<PatientsResponseModel>?){
 
 
             if (response?.isNotEmpty() == true) {

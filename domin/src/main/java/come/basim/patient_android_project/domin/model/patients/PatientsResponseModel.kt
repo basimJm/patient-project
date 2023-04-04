@@ -2,7 +2,7 @@ package come.basim.patient_android_project.domin.model.patients
 
 import com.google.gson.annotations.SerializedName
 
-data class PatientsRemoteModel(
+data class PatientsResponseModel(
     val condition: String,
 
     @SerializedName("_id")

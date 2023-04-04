@@ -1,31 +1,31 @@
 package come.basim.patient_android_project.data.repository
 
 import come.basim.patient_android_project.data.dataSource.PatientsDataSource
-import come.basim.patient_android_project.domin.model.add.BodyAddingPatientsModel
-import come.basim.patient_android_project.domin.model.addPatientsRemoteModel
-import come.basim.patient_android_project.domin.model.delete.PatientDeleteResponseModel
-import come.basim.patient_android_project.domin.model.patients.PatientsRemoteModel
+import come.basim.patient_android_project.domin.model.add.AddPatientRequest
+import come.basim.patient_android_project.domin.model.AddPatientResponse
+import come.basim.patient_android_project.domin.model.delete.PatientDeleteResponse
+import come.basim.patient_android_project.domin.model.patients.PatientsResponseModel
 import come.basim.patient_android_project.domin.repo.PatientsReporsitory
 import javax.inject.Inject
 
 class PatientsReporsitoryImpl @Inject constructor(private val patientsDataSource: PatientsDataSource) :
     PatientsReporsitory {
 
-     override suspend fun getPatients(): List<PatientsRemoteModel> {
+     override suspend fun getPatients(): List<PatientsResponseModel> {
          val list =patientsDataSource.getPatients().data.sortedBy { it.namePatients }
 
         return list
     }
 
-    override suspend fun addPatients(bodyAddingPatientsModel: BodyAddingPatientsModel): addPatientsRemoteModel {
+    override suspend fun addPatients(bodyAddingPatientsModel: AddPatientRequest): AddPatientResponse {
         return patientsDataSource.addPatients(bodyAddingPatientsModel)
     }
 
-    override suspend fun deletePatient(id: String): PatientDeleteResponseModel {
+    override suspend fun deletePatient(id: String): PatientDeleteResponse {
         return patientsDataSource.deletePatients(id)
     }
 
-    override suspend fun getPatientById(id: String): PatientsRemoteModel {
+    override suspend fun getPatientById(id: String): PatientsResponseModel {
         return patientsDataSource.getPatientById(id).data
     }
 

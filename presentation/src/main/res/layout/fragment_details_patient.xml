@@ -6,8 +6,8 @@
     <data>
 
         <variable
-            name="modle"
-            type="come.basim.patient_android_project.domin.model.patients.PatientsRemoteModel" />
+            name="model"
+            type="come.basim.patient_android_project.domin.model.patients.PatientsResponseModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -28,7 +28,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="30dp"
             android:lines="2"
-            android:text="@{modle.namePatients}"
+            android:text="@{model.namePatients}"
             android:textColor="@color/white"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="@id/card_view_image"
@@ -51,7 +51,7 @@
 
 
             <androidx.appcompat.widget.AppCompatImageView
-                imageUrl="@{modle.photo}"
+                imageUrl="@{model.photo}"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:scaleType="fitXY"
@@ -89,7 +89,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:layout_marginEnd="50dp"
-            android:text="@{modle.getPatientInfo()}"
+            android:text="@{model.getPatientInfo()}"
             android:textColor="@color/newColor"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"

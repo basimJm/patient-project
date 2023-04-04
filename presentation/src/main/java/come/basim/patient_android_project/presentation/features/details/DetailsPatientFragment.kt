@@ -6,19 +6,22 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.appcompat.widget.AppCompatTextView
 import androidx.core.view.isVisible
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import come.basim.patient_android_project.core.BaseFragment
+import come.basim.patient_android_project.presentation.R
 import come.basim.patient_android_project.presentation.databinding.FragmentDetailsPatientBinding
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class DetailsPatientFragment:Fragment() {
-    
-    private lateinit var binding : FragmentDetailsPatientBinding
-    private val viewModel :DetailsViewModel by viewModels()
+class DetailsPatientFragment :
+    BaseFragment<FragmentDetailsPatientBinding>(R.layout.fragment_details_patient) {
+
+
+    private val viewModel: DetailsViewModel by viewModels()
 
 
     override fun onCreateView(
@@ -67,6 +70,15 @@ class DetailsPatientFragment:Fragment() {
             }
 
         }
+    }
+
+    fun String.addPoint(): String {
+        return "$this."
+    }
+
+
+    fun AppCompatTextView.addPoint() {
+        this.text = text.toString().addPoint()
     }
 
 }

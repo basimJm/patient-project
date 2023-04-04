@@ -2,13 +2,11 @@ package come.basim.patient_android_project.presentation.features.add
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import come.basim.patient_android_project.domin.model.add.BodyAddingPatientsModel
-import come.basim.patient_android_project.domin.model.addPatientsRemoteModel
-import come.basim.patient_android_project.domin.model.patients.PatientsRemoteModel
+import come.basim.patient_android_project.domin.model.add.AddPatientRequest
+import come.basim.patient_android_project.domin.model.AddPatientResponse
 import come.basim.patient_android_project.domin.usecase.add.AddPatientsUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -18,7 +16,7 @@ class AddPatientsViewModel @Inject constructor(
     private val addPatientsUseCase: AddPatientsUseCase
 ) : ViewModel() {
 
-    val _addPatientsSatteFlow: MutableStateFlow<addPatientsRemoteModel?> =
+    val _addPatientsSatteFlow: MutableStateFlow<AddPatientResponse?> =
         MutableStateFlow(null)
     val addPatientsSatteFlow = _addPatientsSatteFlow.asStateFlow()
 
@@ -30,7 +28,7 @@ class AddPatientsViewModel @Inject constructor(
     val _addPatientsErorrSatteFlow: MutableStateFlow<Exception?> = MutableStateFlow(null)
     val addPatientsErorrSatteFlow = _addPatientsErorrSatteFlow.asStateFlow()
 
-fun addPatient(bodyAddingPatientsModel: BodyAddingPatientsModel){
+fun addPatient(bodyAddingPatientsModel: AddPatientRequest){
 
     viewModelScope.launch {
         _addPatientsLoadingSatteFlow.emit(true)
